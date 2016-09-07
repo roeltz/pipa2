@@ -1,0 +1,28 @@
+{
+    "name": "pipa/base",
+    "license": "MIT",
+    "description": "Base package for the Pipa Framework",
+    "authors": [
+        {
+            "name": "Leonardo Rothe Tagliafico",
+            "email": "leo_rothe@msn.com",
+            "homepage": "http://leorothe.com/"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "Pipa/Data/Query/_defaults.php",
+			"Pipa/HTTP/_defaults.php",
+            "Pipa/Locale/_defaults.php",
+    		"Pipa/Locale/_helpers.php",
+            "Pipa/ORM/_defaults.php"
+    	],
+    	"psr-0": {
+    		"Pipa\\": ".",
+    		"": ["app/src/controllers", "app/src"]
+    	}
+    },
+    "require": {
+    	"php": ">=5.6.0"
+    }
+}

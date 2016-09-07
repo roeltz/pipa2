@@ -1,0 +1,2 @@
+FUNCIONA!
+<?php echo $var ?>

@@ -1,0 +1,9 @@
+{
+	"http": {
+		"base-uri": "/aptanaws/pipa2",
+		"view": {
+			"dir": "app/src/views",
+			"default-engine": "json"
+		}
+	}
+}

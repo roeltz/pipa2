@@ -1,0 +1,7 @@
+{
+	"base":	"/aptanaws/pipa2",
+	"routes": {
+		"GET /": "Main::index",
+		"GET /login": "Main::login"
+	}
+}
