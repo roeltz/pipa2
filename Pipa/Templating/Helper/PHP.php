@@ -5,6 +5,10 @@ use Pipa\Templating\Helper;
 
 class PHP extends Helper {
 
+	function inline($view) {
+		$this->put($view, $this->data, $this->options);
+	}
+
     function put($view, array $data = [], array $options = []) {
         $engine = clone $this->callingEngine;
         return $engine->render($data, array_merge($options, [

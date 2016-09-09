@@ -2,7 +2,7 @@
 
 class Main {
 
-	/** @HTML(view = "index", layout = "layout-basic") */
+	/** @HTML("index") */
 	function index() {
 		return ["what"=>"mundo"];
 	}

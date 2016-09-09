@@ -7,8 +7,9 @@ use Pipa\HTTP\Response;
 class PHPEngine extends HelperPlumbing implements Engine {
 
 	function __construct() {
-		$this->addHelper("view", Helper\PHP::class);
 		$this->addHelper("html", Helper\HTML::class);
+		$this->addHelper("layout", Helper\Layout::class);
+		$this->addHelper("view", Helper\PHP::class);
 	}
 
 	function render(array $data, array $options) {

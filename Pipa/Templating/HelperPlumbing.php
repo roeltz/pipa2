@@ -23,6 +23,10 @@ abstract class HelperPlumbing {
 		return $this;
 	}
 
+	function getHelper($name) {
+		return @$this->helpers[$name];
+	}
+
 	function initAllHelpers(array &$data, array &$options, Engine $callingEngine, $callingFile = null) {
 		return array_merge(
 			$this->initHelpers(self::$globalHelpers, $data, $options, $callingEngine, $callingFile),

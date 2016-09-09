@@ -3,7 +3,7 @@
 use Pipa\Locale\Locale;
 use Pipa\Util\String;
 
-function __($message, $n, $values = null, $domain = null) {
+function __($message, $n = null, $values = null, $domain = null) {
 
     if (!is_integer($n)) {
         $domain = $values;

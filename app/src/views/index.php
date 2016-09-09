@@ -1,3 +1,14 @@
-<?php __e("[*,-1] negative files|[0] no file|[1] one file|[2,3] {n} files|[4,*] more than three files", 10) ?>
+<?php
+	$layout
+		->template("layout-main.php")
+		->content("header", "header.php")
+		->content("footer", "footer.php")
+	;
+?>
 
-<?php print_r($session) ?>
+<?php $layout->begin("main") ?>
+
+¡HOLA MUNDO!
+
+<?php $layout->end("main") ?>
+<?php echo "XD"?>

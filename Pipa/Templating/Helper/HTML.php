@@ -5,12 +5,8 @@ use Pipa\Templating\Helper;
 
 class HTML extends Helper {
 
-    static function text($value) {
-        return htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
-    }
-
     function checkbox($attr, $checked = false) {
-        return $this->tag("input")
+        echo $this->tag("input")
             ->attr("type", "checkbox")
             ->attrOrName($attr)
             ->attr("checked", $checked)
@@ -18,7 +14,7 @@ class HTML extends Helper {
     }
 
     function input($type, $attr, $value = false) {
-        return $this->tag("input")
+        echo $this->tag("input")
             ->attr("type", $type)
             ->attr("value", $value)
             ->attrOrName($attr)
@@ -26,7 +22,7 @@ class HTML extends Helper {
     }
 
     function radio($attr, $checked = false) {
-        return $this->tag("input")
+        echo $this->tag("input")
             ->attr("type", "radio")
             ->attrOrName($attr)
             ->attr("checked", $checked)
@@ -48,19 +44,23 @@ class HTML extends Helper {
             ], $text);
         }
 
-        return $tag;
+        echo $tag;
     }
 
     function tag($name, $attr = [], $children = []) {
         return new HTMLTag($name, $attr, $children);
     }
 
-    function __call($name, $args) {
-        return $this->tag($name, ...$args);
+	function text($string) {
+		return HTMLTag::escape($string);
+	}
+
+    function __call($name, ...$args) {
+        echo $this->tag($name, ...$args);
     }
 
-    function __invoke($value) {
-        return self::text($value);
+    function __invoke($string) {
+        echo self::text($string);
     }
 
 }
@@ -73,6 +73,10 @@ class HTMLTag {
     private $attr;
     private $children;
     private $parent;
+
+	static function escape($value) {
+        return htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
+    }
 
     function __construct($name, $attr = [], $children = [], $parent = null) {
         $this->name = $name;
@@ -126,7 +130,7 @@ class HTMLTag {
         } else if ($value === false) {
             return "";
         } else {
-            return "$name=\"" . HTML::text($value) . "\"";
+            return "$name=\"" . HTMLTag::escape($value) . "\"";
         }
     }
 
@@ -140,7 +144,7 @@ class HTMLTag {
     function renderChildren() {
         if (is_array($this->children)) {
             return join("", array_map(function($child){
-                return is_string($child) ? HTML::text($child) : $child;
+                return is_string($child) ? HTMLTag::escape($child) : $child;
             },$this->children));
         }
     }
