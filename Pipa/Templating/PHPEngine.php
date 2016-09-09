@@ -18,9 +18,11 @@ class PHPEngine extends HelperPlumbing implements Engine {
 			: "{$options['view-dir']}/{$options['view']}.php"
 		;
 
-		ob_start();
 		extract($this->initAllHelpers($data, $options, $this, $file));
 		extract($data);
+		ob_start();
+
+		$this->startHelpersLifecycles();
 
 		try {
 			require $file;
@@ -29,10 +31,9 @@ class PHPEngine extends HelperPlumbing implements Engine {
 			throw $ex;
 		}
 
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		return $buffer;
-	}
+		$this->endHelpersLifecycles();
 
+		return ob_get_clean();
+	}
 
 }

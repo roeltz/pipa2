@@ -24,10 +24,17 @@ class Helper {
      */
     protected $callingFile;
 
-    final function init(array &$data, array &$options, $callingEngine, $callingFile) {
+    final function initHelper(array &$data, array &$options, $callingEngine, $callingFile) {
         $this->data = $data;
         $this->options = $options;
         $this->callingEngine = $callingEngine;
         $this->callingFile = $callingFile;
     }
+
+	function renderWithCallingEngine(array $data = [], array $options = []) {
+		$data = array_merge($this->data, $data);
+		$options = array_merge($this->options, $options);
+		$engine = clone $this->callingEngine;
+		return $engine->render($data, $options);
+	}
 }

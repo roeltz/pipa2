@@ -1,14 +1,10 @@
 <?php
 	$layout
-		->template("layout-main.php")
-		->content("header", "header.php")
-		->content("footer", "footer.php")
+		->buffer("main")
+		->template("layout-main")
+		->content("title", "Veamos")
+		->put("header", "header")
+		->put("footer", "footer")
 	;
 ?>
-
-<?php $layout->begin("main") ?>
-
 ¡HOLA MUNDO!
-
-<?php $layout->end("main") ?>
-<?php echo "XD"?>
