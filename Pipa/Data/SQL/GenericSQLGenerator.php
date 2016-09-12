@@ -15,7 +15,7 @@ use Pipa\Data\Query\RangeExpression;
 use Pipa\Data\Query\SQLExpression;
 use Pipa\Data\Relational\Join;
 use Pipa\Data\Relational\RelationalCriteria;
-use Pipa\Util\String;
+use Pipa\Util\Strings;
 
 abstract class GenericSQLGenerator {
 
@@ -182,7 +182,7 @@ abstract class GenericSQLGenerator {
 	}
 
 	function interpolateParameters($sql, array $parameters) {
-		return String::interpolate($sql, function($key) use($parameters){
+		return Strings::interpolate($sql, function($key) use($parameters){
 			if ($key[0] == ":") {
 				$key = substr($key, 1);
 				$key = isset($parameters[$key]) ? $parameters[$key] : $key;
@@ -332,7 +332,7 @@ abstract class GenericSQLGenerator {
 
 	function renderSQLExpression(SQLExpression $expression) {
 		if ($expression->parameters) {
-			return String::fill($expression->sql, $expression->parameters);
+			return Strings::fill($expression->sql, $expression->parameters);
 		} else {
 			return $expression->sql;
 		}

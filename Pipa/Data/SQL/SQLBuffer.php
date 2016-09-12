@@ -1,7 +1,7 @@
 <?php
 
 namespace Pipa\Data\SQL;
-use Pipa\Util\String;
+use Pipa\Util\Strings;
 
 class SQLBuffer {
 

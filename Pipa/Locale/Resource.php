@@ -2,7 +2,7 @@
 
 namespace Pipa\Locale;
 use Exception;
-use Pipa\Util\String;
+use Pipa\Util\Strings;
 
 abstract class Resource {
 
@@ -37,7 +37,7 @@ abstract class Resource {
     }
 
 	protected function getLocalizedPath($localeCode) {
-		return String::interpolate($this->path, function($k) use($localeCode) {
+		return Strings::interpolate($this->path, function($k) use($localeCode) {
             return $k == "locale" ? $localeCode : $k;
         });
 	}

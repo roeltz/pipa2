@@ -1,7 +1,7 @@
 <?php
 
 use Pipa\Locale\Locale;
-use Pipa\Util\String;
+use Pipa\Util\Strings;
 
 function __($message, $n = null, $values = null, $domain = null) {
 
@@ -22,11 +22,11 @@ function __($message, $n = null, $values = null, $domain = null) {
     if ($locale = Locale::get()) {
         $translation = $locale->translate($message, $domain);
         if ($n !== null) {
-            $translation = String::plural($translation, $n);
+            $translation = Strings::plural($translation, $n);
             $values["n"] = $n;
         }
         if ($values)
-            $translation = String::fill($translation, $values);
+            $translation = Strings::fill($translation, $values);
         return $translation;
     } else {
         return $message;
