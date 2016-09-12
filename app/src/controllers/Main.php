@@ -6,4 +6,9 @@ class Main {
 	function index() {
 		return ["what"=>"mundo"];
 	}
+
+	/** @JSON */
+	function test() {
+		return new DateTime;
+	}
 }

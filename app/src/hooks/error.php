@@ -1,11 +1,12 @@
-<?php
+ <?php
 
 use Pipa\MVC\Action;
+use Pipa\MVC\RoutingException;
 
 $pipeline->add("^error", function($next) use($context){
     try {
         $next();
     } catch(Exception $ex) {
-        $context->reprocess("Errors::{$context->action->getOptions()['view-engine']}", ["exception"=>$ex]);
+		$context->reprocess("Errors::view", ["exception"=>$ex]);
     }
 });

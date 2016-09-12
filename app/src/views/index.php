@@ -2,7 +2,7 @@
 	$layout
 		->buffer("main")
 		->template("layout-main")
-		->content("title", "Veamos")
+		->setContent("title", "Veamos")
 		->put("header", "header")
 		->put("footer", "footer")
 	;

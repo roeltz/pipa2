@@ -13,10 +13,23 @@ class View implements ViewInterface {
 
 	use EventEmitterTrait;
 
-	protected $engines;
+	protected $engines = [];
 
-	function __construct(array $engines = []) {
-		$this->engines = $engines;
+	function checkEngineCondition(Request $request, array $conditions) {
+		if ($conditions) {
+			if ($accept = @$conditions["accept"]) {
+				return preg_match("#{$accept}#i", @$request->headers["accept"]);
+			} elseif ($ext = @$conditions["ext"]) {
+				return preg_match("#\\.{$ext}\$#", $request->path);
+			}
+		} else {
+			return true;
+		}
+	}
+
+	function engine($name, $engine, array $conditions = []) {
+		$this->engines[$name] = [$engine, $conditions];
+		return $this;
 	}
 
 	function outputHeaders(Response $response) {
@@ -26,27 +39,15 @@ class View implements ViewInterface {
 			header("$header: $value");
 	}
 
-	function registerEngine($name, Engine $engine) {
-		$this->engines[$name] = $engine;
-	}
-
 	function render(MVCRequest $request, MVCResponse $response, Result $result) {
-		$engine = isset($result->options["view-engine"]) ? $result->options["view-engine"] : $request->context->config->get("http.view.default-engine");
-
-		if (!$engine)
-			throw new ViewException("A view engine was not set for this request");
-
 		if ($response->body) {
 			$body = $response->body;
-		} else if (isset($this->engines[$engine])) {
-			$engine = $this->engines[$engine];
-
+		} else if ($engine = $this->selectEngine($request, $result)) {
 			if (is_string($engine))
 				$engine = new $engine();
 
 			$this->emit("engine", $engine);
-			
-			$body = $engine->renderResponse($response, $result->data, $result->options);
+			$body = $engine->renderResponse($response, $result);
 		} else {
 			$body = "";
 		}
@@ -54,4 +55,17 @@ class View implements ViewInterface {
 		$this->outputHeaders($response);
 		echo $body;
 	}
+
+	function selectEngine(Request $request, Result $result) {
+		if ($engine = @$result->options["view-engine"]) {
+			return $this->engines[$engine][0];
+		} else {
+			foreach ($this->engines as $name=>list($engine, $conditions)) {
+				if ($this->checkEngineCondition($request, $conditions)) {
+					return $engine;
+				}
+			}
+		}
+	}
+
 }

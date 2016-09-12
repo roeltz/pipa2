@@ -23,10 +23,11 @@ $config
 $router = new Router();
 $router->load("app/config/routes/app.json");
 
-$view = new View([
-    "html"=>PHPEngine::class,
-    "json"=>JSONEngine::class
-]);
+$view = new View();
+$view
+	->engine("json", JSONEngine::class, ["accept"=>"application/json"])
+	->engine("html", PHPEngine::class)
+;
 
 $context = new Context($config, $router, $view);
 $context
