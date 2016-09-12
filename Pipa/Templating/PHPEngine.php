@@ -12,7 +12,7 @@ class PHPEngine extends HelperPlumbing implements Engine {
 		$this->addHelper("view", Helper\PHP::class);
 	}
 
-	function render(array $data, array $options) {
+	function render($data, array $options) {
 		$file = isset($options['view-layout'])
 			? "{$options['view-dir']}/{$options['view-layout']}.php"
 			: "{$options['view-dir']}/{$options['view']}.php"

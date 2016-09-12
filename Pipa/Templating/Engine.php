@@ -5,6 +5,6 @@ use Pipa\HTTP\Response;
 
 interface Engine {
 
-	function render(array $data, array $options);
+	function render($data, array $options);
 
 }
