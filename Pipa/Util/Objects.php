@@ -2,7 +2,7 @@
 
 namespace Pipa\Util;
 
-abstract class Object {
+abstract class Objects {
 
     static function traverse($object, $path, $write, $newValue = null) {
         $steps = is_array($path) ? $path : explode(".", $path);

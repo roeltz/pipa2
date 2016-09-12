@@ -2,7 +2,7 @@
 
 namespace Pipa\Util;
 
-class String {
+class Strings {
 
     static function fill($str, array $values) {
     	return self::interpolate($str, function($key) use(&$values) {
@@ -37,5 +37,5 @@ class String {
         }
         return false;
     }
-	
+
 }
