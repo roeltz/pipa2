@@ -2,10 +2,10 @@
 
 namespace Pipa\HTTP\View;
 use Pipa\HTTP\Response;
-use Pipa\Templating\Engine as BaseEngine;
+use Pipa\MVC\Result;
 
-interface Engine extends BaseEngine {
+interface Engine {
 
-    function renderResponse(Response $response, array $data, array $options);
+    function renderResponse(Response $response, Result $result);
 
 }
