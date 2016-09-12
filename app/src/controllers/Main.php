@@ -8,7 +8,7 @@ class Main {
 	}
 
 	/** @JSON */
-	function test() {
-		return new DateTime;
+	function test($arg) {
+		return $arg;
 	}
 }

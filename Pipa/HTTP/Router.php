@@ -64,6 +64,7 @@ class Router implements RouterInterface {
 		$extractedData = [];
 
 		if ($matcher->match($state, $extractedData)) {
+			$request->data = array_merge($request->data, $extractedData);
 			return new Action($request->context, $matcher->lastMatch);
 		} else {
 			throw new RoutingException("Action not found");

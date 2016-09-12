@@ -63,7 +63,7 @@ class Action {
 		foreach($function->getParameters() as $parameter) {
 			$name = $parameter->getName();
 			$class = $parameter->getClass();
-			$value = $request->data[$name];
+			$value = @$request->data[$name];
 
 			if (!is_null($value)) {
 				$arguments[] = $this->castArgument($parameter, $value);

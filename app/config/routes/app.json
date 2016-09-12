@@ -3,6 +3,6 @@
 	"routes": {
 		"GET /": "Main::index",
 		"GET /login": "Main::login",
-		"GET /test": "Main::test"
+		"GET /test/{arg}": "Main::test"
 	}
 }
