@@ -16,15 +16,23 @@ class MySQLGenerator extends RelationalSQLGenerator {
 	}
 
 	function escapeField(Field $field) {
-		$escaped = $field->name == "*" ? "*" : $this->escapeIdentifier($field->name);
-		if ($field->collection) {
-			$escaped = $this->escapeIdentifier(
-				$field->collection->alias
-				? $field->collection->alias
-				: $field->collection->name
-			).".$escaped";
+		if ($field->name == "*") {
+			return "*";
+		} else if (strpos($field->name, ".") !== false) {
+			list($name, $path) = explode(".", $field->name, 2);
+			$escaped = $this->escapeIdentifier($name);
+			return "{$escaped}->>\"\$.$path\"";
+		} else {
+			$escaped = $this->escapeIdentifier($field->name);
+			if ($field->collection) {
+				$escaped = $this->escapeIdentifier(
+					$field->collection->alias
+					? $field->collection->alias
+					: $field->collection->name
+				).".$escaped";
+			}
+			return $escaped;
 		}
-		return $escaped;
 	}
 
 	function escapeIdentifier($name) {

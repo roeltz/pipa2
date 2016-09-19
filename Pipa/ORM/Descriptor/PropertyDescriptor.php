@@ -10,6 +10,8 @@ class PropertyDescriptor {
 
     public $eager = false;
 
+	public $embedded = false;
+
     public $generated = false;
 
     public $name;

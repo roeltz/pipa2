@@ -76,6 +76,8 @@ class RelationalMapper implements Mapper {
 
 		if (count($path) == 1) {
 			return $this->getFieldByProperty($property, $descriptor, $previous);
+		} else if ($descriptor->getPropertyDescriptor($property)->embedded) {
+			return join(self::PROPERTY_PATH_DELIMITER, $path);
 		} else {
 			$previous[] = [$property, $descriptor];
 			$nextPath = array_slice($path, 1);

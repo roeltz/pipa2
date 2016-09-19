@@ -48,6 +48,7 @@ class AnnotationDescriptorProvider implements DescriptorProvider {
 
         $pd->cascaded = !!$reader->getPropertyAnnotation($name, "Cascade");
         $pd->eager = !!$reader->getPropertyAnnotation($name, "Eager");
+		$pd->embedded = !!$reader->getPropertyAnnotation($name, "Embedded");
         $pd->generated = !!$reader->getPropertyAnnotation($name, "Generated");
         $pd->notNull = !!$reader->getPropertyAnnotation($name, "NotNull");
         $pd->pk = !!$reader->getPropertyAnnotation($name, "Id");
