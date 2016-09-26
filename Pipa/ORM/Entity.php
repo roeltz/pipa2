@@ -45,7 +45,7 @@ class Entity {
 		if ($returnCriteria) {
 			return $criteria;
 		} else {
-			return $criteria->query();
+			return $criteria->queryAll();
 		}
 	}
 

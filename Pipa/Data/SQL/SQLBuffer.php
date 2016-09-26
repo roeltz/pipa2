@@ -30,7 +30,7 @@ class SQLBuffer {
 			$this->params = array_merge($this->params, $params);
 	}
 
-	function query() {
+	function queryAll() {
 		$this->appendParams($params);
 		return $this->dataSource->querySQL($this, $this->params);
 	}

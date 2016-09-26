@@ -36,7 +36,7 @@ class Bring extends ORMCriteria {
 		$relationDescriptor->applyKeys($entity, $this->descriptor, $copy);
 
 		if ($relationDescriptor instanceof MultipleRelationDescriptor) {
-			$result = $copy->query();
+			$result = $copy->queryAll();
 			$result = $this->processResult($result);
 		} else {
 			$cache = ORM::getInstanceCache($this->descriptor->class);

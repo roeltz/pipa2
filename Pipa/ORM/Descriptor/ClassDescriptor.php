@@ -71,21 +71,22 @@ class ClassDescriptor {
         }
     }
 
-	function getPersistedFields() {
+	function getPersistedFields($underlying = true) {
 		$fields = [];
 
 		foreach ($this->properties as $property)
 			if ($property->persistent)
-				$fields[] = $property->underlyingName[0];
+				$fields[] = $underlying ? $property->underlyingName[0] : $property->name;
 
 		return $fields;
 	}
 
-	function getPrimaryKeys() {
+	function getPrimaryKeys($underlying = true) {
 		$pk = [];
 		foreach ($this->properties as $property)
 			if ($property->pk)
 				$pk[] = $property->underlyingName[0];
+
 		return $pk;
 	}
 

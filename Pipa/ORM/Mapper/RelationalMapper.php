@@ -31,10 +31,16 @@ class RelationalMapper implements Mapper {
         $this->mapped = $source->dataSource->getCriteria();
 
         $this->mapped->from($this->descriptor->collection);
-		$this->mapped->fields($source->fields);
+		$this->mapped->distinct($source->distinct);
+
+		foreach ($source->fields as $field)
+			$this->mapped->fields($this->mapField($field));
 
         foreach ($source->expressions as $expression)
             $this->mapped->expressions[] = $this->mapExpression($expression);
+
+		foreach ($source->order as $order)
+			$this->mapped->orderBy($this->mapField($order->field), $order->type);
 
 		$this->mapped->limit($source->limit, $source->offset);
 
@@ -53,11 +59,19 @@ class RelationalMapper implements Mapper {
 				$lastCollection = $this->getCollection($lastDescriptor, $previous);
 				$relation = $lastDescriptor->getRelationDescriptor($lastProperty);
 
-				$this->mapped->join(
-					$collection,
-					new Field($relation->fk[0], $lastCollection),
-					new Field($descriptor->getPrimaryKeys()[0], $collection)
-				);
+				if ($relation instanceof MultipleRelationDescriptor) {
+					$this->mapped->join(
+						$collection,
+						new Field($relation->fk[0], $collection),
+						new Field($lastDescriptor->getPrimaryKeys(false)[0], $lastCollection)
+					);
+				} else {
+					$this->mapped->join(
+						$collection,
+						new Field($relation->fk[0], $lastCollection),
+						new Field($descriptor->getPrimaryKeys(false)[0], $collection)
+					);
+				}
 			}
 			return $collection;
 		} else {

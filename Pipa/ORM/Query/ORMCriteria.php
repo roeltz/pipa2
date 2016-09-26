@@ -21,7 +21,7 @@ class ORMCriteria extends Criteria {
         parent::__construct($dataSource, $parent);
         $this->descriptor = $descriptor;
         $this->from($dataSource->getCollection($descriptor->collection));
-		$this->fields($descriptor->getPersistedFields());
+		$this->fields($descriptor->getPersistedFields(false));
     }
 
     function across($path, ...$constraints) {
@@ -51,9 +51,9 @@ class ORMCriteria extends Criteria {
 		return $this;
     }
 
-    function query() {
+    function queryAll() {
         $criteria = $this->getMappedCriteria();
-        $result = $criteria->query();
+        $result = $criteria->queryAll();
         $result = $this->processResult($result);
         return $result;
     }

@@ -42,7 +42,8 @@ class Criteria extends ExpressionBuilder {
         return $this->dataSource->delete($this);
     }
 
-    function distinct($field) {
+    function distinct($distinct = true) {
+		$this->distinct = $distinct;
         return $this;
     }
 
@@ -106,7 +107,7 @@ class Criteria extends ExpressionBuilder {
 		return ceil($this->count() / ($size > 0 ? $size : 1));
 	}
 
-    function query() {
+    function queryAll() {
         if ($this->index && ($this->fields || !$this->hasField($this->index)))
             $this->fields[] = $this->index;
 
@@ -126,16 +127,16 @@ class Criteria extends ExpressionBuilder {
         $field = Field::from($field);
         $this->fields = [$field];
 
-        if ($result = $this->query())
+        if ($result = $this->queryAll())
             foreach ($result as &$item)
                 $item = $item[$field->name];
-		
+
         return $result;
     }
 
     function querySingle() {
 		$this->n(1);
-		if ($result = $this->query())
+		if ($result = $this->queryAll())
 			return current($result);
 	}
 

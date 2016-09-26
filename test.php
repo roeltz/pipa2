@@ -22,6 +22,22 @@ class User extends Entity {
 
     /** @Id @AliasOf("pname") */
     public $name;
+
+	/** @Many(class = "Post", fk = "ownerid") */
+	public $posts;
+
+}
+
+/** @Collection("kak_topics") */
+class Topic extends Entity {
+
+	/** @Id @AliasOf("topicid") */
+	public $id;
+
+	public $title;
+
+	/** @One(class = "User", fk = "ownerid") @NotNull */
+	public $owner;
 }
 
 /** @Collection("kak_posts") */
@@ -44,12 +60,17 @@ class Post extends Entity {
 
     /** @One(class = "User", fk = "ownerid") @NotNull */
     public $owner;
+
 }
 
-$posts = Post::getCriteria()
-    ->bring("owner", true)
-        ->done()
-    ->query()
-;
+/*
+$users = User::getCriteria()
+	->like("posts.subject", "%chiste%")
+	->distinct()
+	->queryAll();
+*/
 
-//print_r($posts);
+$posts = Post::getCriteria()
+	->eq("topic.owner", "admin")
+	->orderBy("topic.title")
+	->queryAll();
