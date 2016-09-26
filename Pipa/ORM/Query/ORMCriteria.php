@@ -9,8 +9,6 @@ use Pipa\ORM\ORM;
 
 class ORMCriteria extends Criteria {
 
-    public $across = [];
-
     public $bring = [];
 
     public $invoke = [];
@@ -22,11 +20,6 @@ class ORMCriteria extends Criteria {
         $this->descriptor = $descriptor;
         $this->from($dataSource->getCollection($descriptor->collection));
 		$this->fields($descriptor->getPersistedFields(false));
-    }
-
-    function across($path, ...$constraints) {
-        $this->across[$path] = $constraints;
-        return $this;
     }
 
     function bring($property, ...$constraints) {
